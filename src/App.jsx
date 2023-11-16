@@ -1,3 +1,7 @@
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import "./index.css";
+
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -32,12 +36,18 @@ function Accordion({ data }) {
 }
 
 function AccordionItem({ num, title, text }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handelToggle() {
+    setIsOpen((isOpen) => !isOpen);
+  }
+
   return (
-    <div className="open">
-      <p className="number"> {num + 1} </p>
+    <div className={`item ${isOpen ? "open " : ""}`} onClick={handelToggle}>
+      <p className="number"> {num < 9 ? `0${num + 1} ` : num + 1} </p>
       <p className="title"> {title} </p>
-      <p className="icon"></p>
-      <div className="content-box"> {text} </div>
+      <p className="icon"> {isOpen ? "-" : "+"} </p>
+      {isOpen && <div className="content-box"> {text} </div>}
     </div>
   );
 }
